@@ -311,14 +311,14 @@ class BaseFief:
         try:
             decoded_token = jwt.JWT(jwt=access_token, algs=["RS256"], key=jwks)
             claims = json.loads(decoded_token.claims)
-            access_token_scope = claims["scope"].split()
+            access_token_scope = claims.get("scp") or claims["scope"].split()
             if required_scope is not None:
                 for scope in required_scope:
                     if scope not in access_token_scope:
                         raise FiefAccessTokenMissingScope()
 
             try:
-                acr = FiefACR(claims["acr"])
+                acr = FiefACR(claims.get("acr", "0"))
             except ValueError as e:
                 raise FiefAccessTokenInvalid() from e
 
@@ -326,7 +326,7 @@ class BaseFief:
                 if acr < required_acr:
                     raise FiefAccessTokenACRTooLow()
 
-            permissions: list[str] = claims["permissions"]
+            permissions: list[str] = claims.get("permissions", [])
             if required_permissions is not None:
                 for required_permission in required_permissions:
                     if required_permission not in permissions:
