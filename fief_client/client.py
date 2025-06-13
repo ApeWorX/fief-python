@@ -198,7 +198,7 @@ class BaseFief:
     _openid_configuration: Optional[dict[str, Any]] = None
     _jwks: Optional[jwk.JWKSet] = None
 
-    _verify: "VerifyTypes"
+    _verify: ""
     _cert: "CertTypes"
 
     def __init__(
@@ -209,8 +209,8 @@ class BaseFief:
         *,
         encryption_key: Optional[str] = None,
         host: Optional[str] = None,
-        verify: VerifyTypes = True,
-        cert: Optional[CertTypes] = None,
+        verify: "VerifyTypes" = True,
+        cert: Optional["CertTypes"] = None,
     ) -> None:
         """
         Initialize the client.
@@ -507,8 +507,8 @@ class Fief(BaseFief):
         *,
         encryption_key: Optional[str] = None,
         host: Optional[str] = None,
-        verify: VerifyTypes = True,
-        cert: Optional[CertTypes] = None,
+        verify: "VerifyTypes" = True,
+        cert: Optional["CertTypes"] = None,
     ) -> None:
         super().__init__(
             base_url,
@@ -934,8 +934,8 @@ class FiefAsync(BaseFief):
         *,
         encryption_key: Optional[str] = None,
         host: Optional[str] = None,
-        verify: VerifyTypes = True,
-        cert: Optional[CertTypes] = None,
+        verify: "VerifyTypes" = True,
+        cert: Optional["CertTypes"] = None,
     ) -> None:
         super().__init__(
             base_url,
