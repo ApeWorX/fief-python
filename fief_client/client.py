@@ -3,14 +3,16 @@ import json
 import uuid
 from collections.abc import Mapping
 from enum import Enum
-from typing import Any, Optional, TypedDict, Union
+from typing import TYPE_CHECKING, Any, Optional, TypedDict, Union
 from urllib.parse import urlencode, urlsplit, urlunsplit
 
 import httpx
-from httpx._types import CertTypes, VerifyTypes
 from jwcrypto import jwk, jwt
 
 from fief_client.crypto import is_valid_hash
+
+if TYPE_CHECKING:
+    from httpx._types import CertTypes, VerifyTypes
 
 HTTPXClient = Union[httpx.Client, httpx.AsyncClient]
 
@@ -196,8 +198,8 @@ class BaseFief:
     _openid_configuration: Optional[dict[str, Any]] = None
     _jwks: Optional[jwk.JWKSet] = None
 
-    _verify: VerifyTypes
-    _cert: CertTypes
+    _verify: "VerifyTypes"
+    _cert: "CertTypes"
 
     def __init__(
         self,
